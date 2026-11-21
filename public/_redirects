@@ -1,0 +1,4 @@
+/join    /index.html   200
+/create  /index.html   200
+/room/*  /index.html   200
+/*       /index.html   200

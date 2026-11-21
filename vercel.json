@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "public": true,
+  "rewrites": [
+    { "source": "/join", "destination": "/index.html" },
+    { "source": "/create", "destination": "/index.html" },
+    { "source": "/room/:code", "destination": "/index.html" }
+  ]
+}

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COUP Online | لعبة الانقلاب أونلاين — ObaiTech</title>
+  <meta name="description" content="العب لعبة الخداع والاستنتاج الشهيرة COUP أونلاين مجاناً مع أصدقائك أو ضد الذكاء الاصطناعي، بتصميم عصري وبطاقات نسخة المستقبل. تطوير عُبيّ وتد (Obai Wattad)." />
+  <meta name="keywords" content="Coup, لعبة انقلاب, لعبة Coup اونلاين, العاب جماعية, العاب ذكاء وخداع, Obai Wattad, ObaiTech" />
+  <meta name="author" content="Obai Wattad (ObaiTech)" />
+
+  <!-- Open Graph / Social Media Rich Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="COUP Online | لعبة الانقلاب والخداع الجماعية" />
+  <meta property="og:description" content="انضم لغرفة أصدقائك بكود من 6 أحرف، اخدعهم واكشف أكاذيبهم! العبها الآن مجاناً في المتصفح." />
+  <meta property="og:url" content="https://obaiwattad.github.io/coup/" />
+  <meta property="og:image" content="https://obaiwattad.github.io/coup/assets/cards/modern-contessa.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="COUP Online | لعبة الانقلاب والخداع الجماعية" />
+  <meta name="twitter:description" content="العب COUP أونلاين مع أصدقائك مجاناً في المتصفح! تطوير Obai Wattad." />
+  <meta name="twitter:image" content="https://obaiwattad.github.io/coup/assets/cards/modern-contessa.jpg" />
+
+  <link rel="icon" type="image/jpeg" href="assets/cards/modern-contessa.jpg" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- PeerJS for Serverless P2P Online Multiplayer -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
+  <!-- Universal Coup Game Engine -->
+  <script src="js/gameEngine.js" defer></script>
+  <!-- Main Application Logic -->
+  <script src="js/app.js" defer></script>
+</head>
+<body dir="rtl">
+  <div class="starfield"></div>
+
+  <!-- Minimal, Clean Top Bar -->
+  <header class="top-navbar">
+    <div class="brand-logo" id="btn-home-logo" title="العودة للرئيسية">
+      <span class="coup-ambigram-badge">coup</span>
+      <div class="brand-text-wrap">
+        <span class="brand-title" data-i18n="app_title">انقلاب</span>
+        <span class="brand-by">by ObaiTech</span>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-btn accent" id="btn-open-cheatsheet">
+        <span>📋</span>
+        <span data-i18n="nav_cheatsheet">جدول الحركات</span>
+      </button>
+
+      <button class="nav-btn" id="btn-open-rules">
+        <span>ℹ️</span>
+        <span data-i18n="nav_rules">القوانين</span>
+      </button>
+
+      <!-- Settings Dropdown Button -->
+      <div class="settings-dropdown-wrap">
+        <button class="nav-btn" id="btn-toggle-settings" title="الإعدادات والمزيد">
+          <span>⚙️</span>
+          <span data-i18n="nav_settings">الإعدادات</span>
+        </button>
+
+        <div class="settings-menu" id="settings-menu">
+          <div class="settings-status-row">
+            <span class="connection-dot"></span>
+            <span id="connection-mode-text">متصل أونلاين</span>
+          </div>
+
+          <button class="settings-item" id="btn-toggle-lang">
+            <span>🌐 اللغة / Language</span>
+            <strong id="lang-label">English</strong>
+          </button>
+
+          <button class="settings-item" id="btn-toggle-card-style">
+            <span>🃏 شكل البطاقات</span>
+            <strong id="card-style-label">الأصلية</strong>
+          </button>
+
+          <button class="settings-item" id="btn-toggle-sound">
+            <span>🔊 المؤثرات الصوتية</span>
+            <strong id="sound-icon">مفعّل</strong>
+          </button>
+
+          <button class="settings-item" id="btn-share-game">
+            <span>📣 شارك اللعبة مع أصدقائك</span>
+            <span>↗</span>
+          </button>
+
+          <button class="settings-item" id="btn-open-credits">
+            <span>👨‍💻 عن المطور (Obai Wattad)</span>
+            <span>←</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-container">
+
+    <!-- ================= SCREEN 1: SIMPLE & CLEAN HOME ================= -->
+    <section id="screen-home" class="screen active">
+      <div class="home-center-wrap">
+        <div class="auth-panel">
+          <!-- Compact 5-Card Visual Preview -->
+          <div class="mini-card-fan" id="hero-card-fan" title="اضغط لعرض قدرات البطاقات">
+            <div class="fan-card" data-role="duke"><img src="assets/cards/modern-duke.jpg" alt="Duke" /></div>
+            <div class="fan-card" data-role="assassin"><img src="assets/cards/modern-assassin.jpg" alt="Assassin" /></div>
+            <div class="fan-card" data-role="contessa"><img src="assets/cards/modern-contessa.jpg" alt="Contessa" /></div>
+            <div class="fan-card" data-role="captain"><img src="assets/cards/modern-captain.jpg" alt="Captain" /></div>
+            <div class="fan-card" data-role="ambassador"><img src="assets/cards/modern-ambassador.jpg" alt="Ambassador" /></div>
+          </div>
+
+          <h1 class="home-main-title" data-i18n="home_welcome">العب Coup مع أصدقائك أونلاين</h1>
+          <p class="home-sub-title" id="home-sub-title" data-i18n="home_sub">أنشئ غرفة أو ادخل كود الغرفة للعب مباشرة</p>
+
+          <div class="tabs-header">
+            <button class="tab-btn active" id="tab-create" data-i18n="tab_create">إنشاء غرفة</button>
+            <button class="tab-btn" id="tab-join" data-i18n="tab_join">انضمام بكود</button>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-player-name" data-i18n="label_your_name">اسمك</label>
+            <input
+              type="text"
+              id="input-player-name"
+              class="form-input"
+              maxlength="18"
+              placeholder="مثال: obai"
+            />
+          </div>
+
+          <div class="form-group" id="join-code-group" style="display: none;">
+            <label class="form-label" for="input-room-code" data-i18n="label_room_code">كود الغرفة (6 أحرف)</label>
+            <input
+              type="text"
+              id="input-room-code"
+              class="form-input code-input"
+              maxlength="6"
+              placeholder="AB12CD"
+            />
+          </div>
+
+          <div id="home-error-msg" class="error-banner" style="display: none;"></div>
+
+          <button class="primary-btn" id="btn-submit-room">
+            <span>🚀</span>
+            <span id="submit-room-text" data-i18n="btn_create_room">إنشاء غرفة جديدة</span>
+          </button>
+
+          <div class="home-secondary-actions">
+            <button class="secondary-btn full-width-btn" id="btn-quick-bot-match">
+              <span>🤖</span>
+              <span data-i18n="btn_quick_bots">تجربة سريعة ضد الكمبيوتر (Bots)</span>
+            </button>
+            <button class="secondary-btn full-width-btn" id="btn-home-share">
+              <span>📣</span>
+              <span data-i18n="btn_share_app">مشاركة رابط اللعبة</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 2: CLEAN ROOM LOBBY ================= -->
+    <section id="screen-lobby" class="screen">
+      <div class="lobby-card">
+        <div class="lobby-code-banner">
+          <div class="lobby-code-label" data-i18n="room_code_label">كود الغرفة لمشاركته مع أصدقائك</div>
+          <div class="room-code-value" id="lobby-room-code">------</div>
+          <div class="lobby-share-btns">
+            <button class="secondary-btn" id="btn-copy-code">
+              <span>📋</span>
+              <span data-i18n="btn_copy_code">نسخ الكود</span>
+            </button>
+            <button class="secondary-btn" id="btn-copy-link">
+              <span>🔗</span>
+              <span data-i18n="btn_copy_link">نسخ رابط الدعوة</span>
+            </button>
+            <button class="secondary-btn" id="btn-whatsapp-invite" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.45); color: #6ee7b7;">
+              <span>💬</span>
+              <span data-i18n="btn_whatsapp_invite">دعوة واتساب</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="lobby-section-header">
+          <div style="font-weight: 800;">
+            <span data-i18n="players_in_room">اللاعبون</span>
+            (<span id="lobby-player-count">1</span>/6)
+          </div>
+          <div id="lobby-host-controls" style="display: flex; gap: 0.5rem;">
+            <button class="secondary-btn compact" id="btn-add-bot">
+              <span>🤖</span>
+              <span data-i18n="btn_add_bot">+ بوت</span>
+            </button>
+            <button class="secondary-btn compact" id="btn-shuffle-order">
+              <span>🔀</span>
+              <span data-i18n="btn_shuffle_order">خلط الدور</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="lobby-players-list" id="lobby-players-list"></div>
+
+        <div class="lobby-footer-btns">
+          <button class="secondary-btn" id="btn-leave-lobby">
+            <span>🚪</span>
+            <span data-i18n="btn_leave_room">خروج</span>
+          </button>
+
+          <button class="primary-btn" id="btn-start-game" style="max-width: 280px;">
+            <span>🔥</span>
+            <span data-i18n="btn_start_game">ابدأ اللعب!</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 3: CLEAN GAME TABLE ================= -->
+    <section id="screen-game" class="screen">
+      <div class="clean-table-container">
+
+        <!-- 1. Top Status & Latest Event Bar -->
+        <div class="status-banner" id="game-status-banner">
+          <div class="turn-headline" id="turn-headline-text">...</div>
+
+          <div class="status-bar-right">
+            <div class="latest-log-ticker" id="latest-log-ticker"></div>
+
+            <button class="secondary-btn compact" id="btn-open-log">
+              <span>📜</span>
+              <span data-i18n="btn_log">السجل</span>
+              <span class="deck-mini-count" id="deck-count-badge" title="البطاقات المتبقية في الكومة">9</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Players Row -->
+        <div class="players-row-grid" id="players-seats-grid"></div>
+
+        <!-- 3. Center Stage: Dynamic Reaction OR Action Picker -->
+        <div class="center-stage-area">
+          <div id="dynamic-prompt-container"></div>
+
+          <div id="my-turn-actions-panel" class="turn-actions-panel" style="display: none;">
+            <div class="turn-actions-header">
+              <span data-i18n="choose_action_title">🎯 دورك الآن — اختر حركة للعب:</span>
+              <span id="target-instruction-badge" class="target-hint-pill" style="display: none;"></span>
+            </div>
+            <div class="actions-clean-grid" id="actions-buttons-grid"></div>
+          </div>
+        </div>
+
+        <!-- 4. Bottom Area: Your Secret Hand & Coins -->
+        <div class="my-hand-bar">
+          <div class="my-hand-info">
+            <div class="my-Identity-pill">
+              <span class="my-dot" id="my-color-dot"></span>
+              <strong id="my-player-tag">You</strong>
+            </div>
+
+            <div class="my-coins-pill">
+              <span>🪙</span>
+              <strong id="my-coins-count">2</strong>
+              <span data-i18n="coins_word">عملات</span>
+            </div>
+
+            <div class="hand-hint-text" data-i18n="click_card_hint">
+              💡 اضغط على أي بطاقة لعرض تفاصيلها وقدراتها
+            </div>
+          </div>
+
+          <div class="my-cards-row" id="my-cards-container"></div>
+
+          <!-- Floating Emoji Trigger Button -->
+          <div class="emoji-popover-wrap">
+            <button class="emoji-trigger-btn" id="btn-toggle-emojis" title="إرسال تفاعل سريع">
+              😊 <span data-i18n="btn_react">تفاعل</span>
+            </button>
+            <div class="emoji-popover" id="emoji-popover">
+              <button class="emoji-btn" data-emoji="😎" data-text="أنا صادق 100%! 😎">😎 صادق</button>
+              <button class="emoji-btn" data-emoji="🤥" data-text="كذاب! أتحداك! 🤥">🤥 كذاب</button>
+              <button class="emoji-btn" data-emoji="🤔" data-text="مشكوك في أمرك 🤔">🤔 أشك</button>
+              <button class="emoji-btn" data-emoji="👑" data-text="أنا الدوق! 👑">👑 الدوق</button>
+              <button class="emoji-btn" data-emoji="🗡️" data-text="انتبه على بطاقاتك! 🗡️">🗡️ اغتيال</button>
+              <button class="emoji-btn" data-emoji="😂" data-text="ههههههه خدعتكم! 😂">😂 ضحك</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= DEVELOPER RIGHTS & CONTACT FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span data-i18n="footer_rights">© 2026 جميع الحقوق محفوظة — تطوير</span>
+        <a href="https://obaiwattad.github.io/?lang=en" target="_blank" rel="noopener noreferrer" class="footer-author-link">
+          <strong>Obai Wattad (عُبيّ وتد)</strong> · ObaiTech
+        </a>
+      </div>
+      <div class="footer-links">
+        <a href="https://obaiwattad.github.io/?lang=en" target="_blank" rel="noopener noreferrer" class="footer-pill">
+          <span>🌐</span>
+          <span data-i18n="contact_portfolio">موقعي وأعمالي</span>
+        </a>
+        <a href="https://wa.me/972526477134" target="_blank" rel="noopener noreferrer" class="footer-pill whatsapp">
+          <span>💬</span>
+          <span>WhatsApp</span>
+        </a>
+        <a href="https://www.linkedin.com/in/obai-wattad/" target="_blank" rel="noopener noreferrer" class="footer-pill">
+          <span>💼</span>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://github.com/obaiWattad" target="_blank" rel="noopener noreferrer" class="footer-pill">
+          <span>🐙</span>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= ON-DEMAND MODAL 1: CARD DETAILS INSPECTOR ================= -->
+  <div class="modal-backdrop" id="modal-card-inspector">
+    <div class="modal-box compact-modal" id="card-inspector-content"></div>
+  </div>
+
+  <!-- ================= ON-DEMAND MODAL 2: CHEAT SHEET ================= -->
+  <div class="modal-backdrop" id="modal-cheatsheet">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 data-i18n="cs_modal_title">📋 جدول الحركات والبطاقات (Cheat Sheet)</h3>
+        <button class="secondary-btn compact" data-close-modal="modal-cheatsheet">✖</button>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="cheatsheet-table">
+          <thead>
+            <tr>
+              <th data-i18n="cs_col_influence">البطاقة (Influence)</th>
+              <th data-i18n="cs_col_action">الحركة (Action)</th>
+              <th data-i18n="cs_col_effect">التأثير (Effect)</th>
+              <th data-i18n="cs_col_counter">الصد (Counteraction)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cheatsheet-row cs-general">
+              <td>—</td>
+              <td><strong>Income (دخل)</strong></td>
+              <td data-i18n="cs_eff_income">اجمع 1 عملة</td>
+              <td>—</td>
+            </tr>
+            <tr class="cheatsheet-row cs-general">
+              <td>—</td>
+              <td><strong>Foreign Aid (مساعدة)</strong></td>
+              <td data-i18n="cs_eff_fa">اجمع عملتين</td>
+              <td>—</td>
+            </tr>
+            <tr class="cheatsheet-row cs-general">
+              <td>—</td>
+              <td><strong>Coup (انقلاب)</strong></td>
+              <td data-i18n="cs_eff_coup">ادفع 7 عملات — إسقاط بطاقة لاعب</td>
+              <td>—</td>
+            </tr>
+            <tr class="cheatsheet-row cs-duke">
+              <td>👑 DUKE (الدوق)</td>
+              <td><strong>TAX (ضريبة)</strong></td>
+              <td data-i18n="cs_eff_tax">اجمع 3 عملات</td>
+              <td data-i18n="cs_cnt_duke">يمنع المساعدة الخارجية</td>
+            </tr>
+            <tr class="cheatsheet-row cs-assassin">
+              <td>🗡️ ASSASSIN (القاتل)</td>
+              <td><strong>ASSASSINATE (اغتيال)</strong></td>
+              <td data-i18n="cs_eff_assassin">ادفع 3 عملات — إسقاط بطاقة لاعب</td>
+              <td>—</td>
+            </tr>
+            <tr class="cheatsheet-row cs-ambassador">
+              <td>🔄 AMBASSADOR (السفير)</td>
+              <td><strong>EXCHANGE (تبديل)</strong></td>
+              <td data-i18n="cs_eff_ambassador">اسحب بطاقتين وبدّل مع الكومة</td>
+              <td data-i18n="cs_cnt_steal">يمنع السرقة</td>
+            </tr>
+            <tr class="cheatsheet-row cs-captain">
+              <td>⚓ CAPTAIN (القبطان)</td>
+              <td><strong>STEAL (سرقة)</strong></td>
+              <td data-i18n="cs_eff_captain">اسرق عملتين من لاعب آخر</td>
+              <td data-i18n="cs_cnt_steal">يمنع السرقة</td>
+            </tr>
+            <tr class="cheatsheet-row cs-contessa">
+              <td>💎 CONTESSA (الكونتيسا)</td>
+              <td>—</td>
+              <td>—</td>
+              <td data-i18n="cs_cnt_contessa">تمنع الاغتيال</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ON-DEMAND MODAL 3: EVENT LOG HISTORY ================= -->
+  <div class="modal-backdrop" id="modal-log">
+    <div class="modal-box compact-modal">
+      <div class="modal-header">
+        <h3 data-i18n="event_log_title">📜 سجل أحداث الجولة (Event Log)</h3>
+        <button class="secondary-btn compact" data-close-modal="modal-log">✖</button>
+      </div>
+      <div class="event-log-list" id="event-log-list"></div>
+    </div>
+  </div>
+
+  <!-- ================= ON-DEMAND MODAL 4: FULL RULES ================= -->
+  <div class="modal-backdrop" id="modal-rules">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 data-i18n="rules_modal_title">ℹ️ قوانين لعبة الانقلاب (Coup)</h3>
+        <button class="secondary-btn compact" data-close-modal="modal-rules">✖</button>
+      </div>
+      <div id="rules-modal-body" class="rules-content-body"></div>
+    </div>
+  </div>
+
+  <!-- ================= ON-DEMAND MODAL 5: DEVELOPER & CONTACT (ObaiTech) ================= -->
+  <div class="modal-backdrop" id="modal-credits">
+    <div class="modal-box compact-modal">
+      <div class="modal-header">
+        <h3 data-i18n="credits_modal_title">👨‍💻 عن مطور اللعبة والتواصل</h3>
+        <button class="secondary-btn compact" data-close-modal="modal-credits">✖</button>
+      </div>
+      <div class="rules-content-body">
+        <div class="info-card" style="border-inline-start-color: #d946ef;">
+          <strong style="font-size: 1.05rem;">Obai Wattad · عُبيّ وتد (ObaiTech)</strong>
+          <p style="margin-top: 0.35rem; color: #cbd5e1;" data-i18n="credits_bio">
+            مطور برمجيات، مواقع ويب، متاجر إلكترونية، وتطبيقات هواتف ذكية. تم تصميم وتطوير هذه النسخة من لعبة COUP لتعمل أونلاين مجاناً مع الأصدقاء من أي مكان.
+          </p>
+        </div>
+
+        <div class="credits-links-grid">
+          <a href="https://obaiwattad.github.io/?lang=en" target="_blank" rel="noopener noreferrer" class="primary-btn" style="text-decoration: none;">
+            <span>🌐</span>
+            <span data-i18n="visit_portfolio">زيارة موقعي الشخصي (ObaiTech)</span>
+          </a>
+          <a href="https://wa.me/972526477134" target="_blank" rel="noopener noreferrer" class="secondary-btn full-width-btn" style="text-decoration: none; border-color: rgba(16, 185, 129, 0.45); color: #6ee7b7;">
+            <span>💬</span>
+            <span data-i18n="contact_wa">تواصل عبر واتساب (WhatsApp)</span>
+          </a>
+          <a href="https://www.linkedin.com/in/obai-wattad/" target="_blank" rel="noopener noreferrer" class="secondary-btn full-width-btn" style="text-decoration: none;">
+            <span>💼</span>
+            <span>LinkedIn · Obai Wattad</span>
+          </a>
+          <a href="https://github.com/obaiWattad" target="_blank" rel="noopener noreferrer" class="secondary-btn full-width-btn" style="text-decoration: none;">
+            <span>🐙</span>
+            <span>GitHub · @obaiWattad</span>
+          </a>
+        </div>
+
+        <p style="text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem;">
+          © 2026 Obai Wattad (ObaiTech). All rights reserved.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+</body>
+</html>
